@@ -25,7 +25,7 @@ SECRET_KEY = 'j*$&#=j#z8n2w38m2^h335b+e5rw%!yqxf&q(zl#_s$cvl_j0$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['shenory.com']
 
 
 # Application definition
