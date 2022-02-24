@@ -4,16 +4,18 @@ import pyrebase
 from django.shortcuts import redirect
 import json
 from django.http import JsonResponse
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 config={
-      "apiKey": "AIzaSyCCiWXR8_a4nRV-vU-0ysbiSPV1sQh8nXU",
-  "authDomain": "acm-web-e7ab7.firebaseapp.com",
-  "databaseURL": "https://acm-web-e7ab7-default-rtdb.asia-southeast1.firebasedatabase.app",
-  "projectId": "acm-web-e7ab7",
-  "storageBucket": "acm-web-e7ab7.appspot.com",
-  "messagingSenderId": "46984733423",
-  "appId": "1:46984733423:web:05b805ce0be2e3f88af11a"
+        "apiKey": str(os.getenv('apiKey')),
+        "authDomain": str(os.getenv('authDomain')),
+        "databaseURL": str(os.getenv('databaseURL')),
+        "projectId": str(os.getenv('projectId')),
+        "storageBucket": str(os.getenv('storageBucket')),
+        "messagingSenderId": str(os.getenv('messagingSenderId')),
+        "appId": str(os.getenv('appId'))
 }
 
 # Initialising database,auth and firebase for further use
