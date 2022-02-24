@@ -27,8 +27,6 @@
                 data: form_data,
                     success: function(res) {
                         Cookies.set('token', res['token'])
-                        // Cookies.set('auth_token', res['auth_token'])
-
                         window.location = '/'
                     },
                     error:function(err){

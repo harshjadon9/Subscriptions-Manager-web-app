@@ -9,10 +9,7 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(load_dotenv())
-print(load_dotenv(BASE_DIR / '.env'))
 load_dotenv(BASE_DIR / '.env')
-print(BASE_DIR / '.env')
 config={
         "apiKey": str(os.getenv('apiKey')),
         "authDomain": str(os.getenv('authDomain')),
@@ -124,14 +121,13 @@ def delete(request):
     db.child(email.replace('.','_')).child(id).remove()
     return JsonResponse({'msg': "no error"}, status=200)
 
-def login(request, *arg):
-	return render(request, 'login.html', {'err':arg})
+def login(request):
+	return render(request, 'login.html')
 
 def postsignIn(request):
     email=request.POST.get('email')
     pasw=request.POST.get('pass')
     try:
-        # if there is no error then signin the user with given email and password
         user=authe.sign_in_with_email_and_password(email,pasw)
     except Exception as e:
             error_json = e.args[1]
@@ -140,27 +136,19 @@ def postsignIn(request):
             return JsonResponse({'error': error}, status=401)
     return JsonResponse({'token': user['idToken']}, status=200)
 
-def signup(request, *err):
-    for arg in err:
-        print (arg)
-    return render(request,"signup.html", {'err':err})
+def signup(request):
+    return render(request,"signup.html")
  
 def postsignUp(request):
     email = request.POST.get('email')
     passs = request.POST.get('pass')
-    name = request.POST.get('name')
-    #  try:
-        # creating a user with the given email and password
     try:
         user=authe.create_user_with_email_and_password(email,passs)
-        uid = user['localId']
-        idtoken = request.session['uid']
-        print(uid)
     except Exception as e:
-            error_json = e.args[1]
-            print(error_json)
-            error = json.loads(error_json)['error']['message']
-            return JsonResponse({'error': error}, status=403)
+        error_json = e.args[1]
+        print(error_json)
+        error = json.loads(error_json)['error']['message']
+        return JsonResponse({'error': error}, status=403)
     return JsonResponse({'token': user['idToken']}, status=200)
 
 
