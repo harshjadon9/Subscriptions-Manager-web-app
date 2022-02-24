@@ -6,12 +6,13 @@ import json
 from django.http import JsonResponse
 from dotenv import load_dotenv, find_dotenv
 import os
-import sys
-path = sys.path[1]+'.env'
-load_dotenv(path)
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 print(load_dotenv())
-print(load_dotenv(path))
-print(path)
+print(load_dotenv(BASE_DIR / '.env'))
+load_dotenv(BASE_DIR / '.env')
+print(BASE_DIR / '.env')
 config={
         "apiKey": str(os.getenv('apiKey')),
         "authDomain": str(os.getenv('authDomain')),
