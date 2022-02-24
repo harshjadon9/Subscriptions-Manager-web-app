@@ -1,5 +1,4 @@
-# ACM_Task
- Round 2
+# ACM Task
  
 # Subscriptions Manager 💸
 [link to the site (Shenory.com)](https://shenory.com/)
