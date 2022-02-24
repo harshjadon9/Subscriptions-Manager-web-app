@@ -9,7 +9,9 @@ import os
 import sys
 path = sys.path[1]+'.env'
 load_dotenv(path)
-
+print(load_dotenv())
+print(load_dotenv(path))
+print(path)
 config={
         "apiKey": str(os.getenv('apiKey')),
         "authDomain": str(os.getenv('authDomain')),
