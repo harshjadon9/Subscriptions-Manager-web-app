@@ -55,7 +55,7 @@ ROOT_URLCONF = 'acm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['template'],
+        'DIRS': [os.path.join(BASE_DIR, "static")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
