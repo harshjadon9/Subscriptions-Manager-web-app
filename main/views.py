@@ -6,7 +6,9 @@ import json
 from django.http import JsonResponse
 from dotenv import load_dotenv, find_dotenv
 import os
-load_dotenv(find_dotenv())
+import sys
+path = sys.path[1]+'.env'
+load_dotenv(path)
 
 config={
         "apiKey": str(os.getenv('apiKey')),
