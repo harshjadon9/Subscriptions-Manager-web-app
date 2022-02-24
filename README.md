@@ -4,6 +4,8 @@
 # Subscriptions Manager 💸
 [link to the site (Shenory.com)](https://shenory.com/)
 
+`no need to setup`
+
 ## Tech Stack 🚀
 * Back-End
   * Django
