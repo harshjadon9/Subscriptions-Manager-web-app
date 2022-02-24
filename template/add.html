@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Add Subscriptions {% endblock %}
+
+{% block main %}
+    <div class="logedin back_add" onclick="window.location = '/'">
+        <span style="margin-top: -6px;font-size: 22px;margin-right: 10px;"><</span>
+        <h6 class="welcome_email">Expenses</h6>
+    </div>
+    <div id="id" data="{{ id }}"></div>
+    <div id="payload" payload="{{ payload }}"></div>
+    <h2 class="head">Add expense</h2>
+    <form id="form" method="post">
+    <div class="sub_back" id="sub_back">
+        <input type="text" name="sub" id="sub" placeholder="Subscription" autofocus required autocomplete="off">
+    </div>
+    {% csrf_token %}
+    <select class="vise vise_c" name="recur" id="vise">
+        <option value="Monthly">Monthly</option>
+        <option value="Yearly">Yearly</option>
+    </select>
+    <input type="color" name="color" value="#ff0000" id="color" class="input_c color_c" autocomplete="off">
+    <br>
+    <input type="date" name="date" id="date" class="input_c" required>
+    <input type="number" id="amount" name="amount" placeholder="Amount ( $ )"  class="input_c add_amount" required autocomplete="off">
+    <input type="text" name="note" id="note" class="input_c note" placeholder="a small note..." required autocomplete="off">
+    <p class="add_consent">Your data is safe with us, trust me 😈</p>
+    <button type="submit" class="add_button">Add Subscription</button>
+    </form>
+    <script>
+        var mode = "add"
+        
+        colorpicker = document.getElementById('color');
+        colorpicker.addEventListener('input', ()=>{
+            document.getElementById('sub_back').style.backgroundColor = colorpicker.value+"ba"
+            document.getElementById('sub_back').style.border = "4px solid "+colorpicker.value+""
+       });
+
+
+        var payload = document.getElementById('payload').getAttribute('payload').replace(/'/g,"").replace('[',"").replace(']',"").replace(/ +/g,'')
+        const payload_arr = payload.split(",");
+        if(payload_arr[0]!=""){
+            var mode = "update"
+            console.log(payload_arr);
+            $("#sub").val(payload_arr[0])
+            $("#amount").val(payload_arr[5])
+            $("#note").val(payload_arr[1])
+            $("#date").val(payload_arr[2])
+            $("#vise").val(payload_arr[4])
+            $('#color').val(payload_arr[3])
+            $('.add_button').html("Update")
+            // triggered
+            document.getElementById('sub_back').style.backgroundColor = payload_arr[3]+"ba"
+            document.getElementById('sub_back').style.border = "4px solid "+payload_arr[3]+""
+        }else{}
+        
+
+        $("#form").submit(function (event) {
+        event.preventDefault()
+        var csrf = $("input[name=csrfmiddlewaretoken]").val();
+        var form_data = new FormData(this);
+        form_data.append("mode", mode)
+        form_data.append("id", $("#id").attr("data"))
+            $.ajax({
+                type: 'POST',
+                url: "add/submit",
+                processData: false,
+                cache: false,
+                contentType: false,
+                data: form_data,
+                    success: function(res) {
+                        window.location = '/'
+                    },error:function(err){
+                        // window.location = '/login'
+                    }
+            })
+        });
+    </script>
+{% endblock %}

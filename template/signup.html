@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Login {% endblock %}
+
+{% block main %}
+<h2 style="text-align: center;margin-bottom: 30px;">Sign up</h1>
+    <form id="form" method="post">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Email" class="input_c signup_input" required>
+        <input type="password" name="pass" placeholder="Password" class="input_c signup_input" required>
+        <div class="error" id="error_box">error</div>
+        <p class="add_consent">you agree to share your password with me 😈</p>
+        <button type="submit" class="add_button">Signup</button>
+        <button type="button" onclick="window.location = '/login'" class="add_button nobg">Login, instead</button>
+    </form>
+    <script>
+        $("#form").submit(function (event) {
+            event.preventDefault()
+            var csrf = $("input[name=csrfmiddlewaretoken]").val();
+            var form_data = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: "postsignUp",
+                    processData: false,
+                    cache: false,
+                    contentType: false,
+                    data: form_data,
+                        success: function(res) {
+                            Cookies.set('token', res['token'])
+                            window.location = '/'
+                        },
+                        error:function(err){
+                            var err = (err.responseJSON['error'])
+                            if(err=="EMAIL_EXISTS"){
+                                document.getElementById('error_box').style.display = "block"
+                                document.getElementById('error_box').innerText = "Email already exist, u forgot?"
+                                setTimeout(()=>{document.getElementById('error_box').style.display = "none"}, 5000);
+                            }else if(err=="WEAK_PASSWORD : Password should be at least 6 characters"){
+                                document.getElementById('error_box').style.display = "block"
+                                document.getElementById('error_box').innerText = "Bruh, a bit more hard one plz!"
+                                setTimeout(()=>{document.getElementById('error_box').style.display = "none"}, 5000);
+                            }else{
+                                document.getElementById('error_box').style.display = "block"
+                                document.getElementById('error_box').innerText = "server error, Contact harsh ASAP!"
+                                setTimeout(()=>{document.getElementById('error_box').style.display = "none"}, 5000);
+                            }
+                        }
+            });
+        })
+    </script>
+{% if err %}
+{{ err }}
+{% endif %}
+{% endblock %}

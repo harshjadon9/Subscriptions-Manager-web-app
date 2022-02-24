@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} All Subscriptions {% endblock %}
+
+{% block main %}
+{% if payload %}
+{{ payload }}
+{% endif %}
+    <select id="vise" class="vise" onchange="recur_change()">
+        <option value="Monthly">Monthly</option>
+        <option value="Yearly">Yearly</option>
+    </select>
+    <div class="logedin">
+        <h6 class="welcome">Welcome, <br></h6>
+        <h6 class="welcome_email">{{ email }}</h6>
+    </div>
+    <div class="logout" onclick="logout()">
+        <h6 class="welcome_email">Logout</h6>
+        <i class="fas fa-sign-out"></i>
+    </div>
+    <h2 class="head">all expenses</h2>
+    {% csrf_token %}
+    {% for i in subs %}
+    <div class="expense" style="background-color: {{ i.payload.3 }}e0" onclick="window.location = '/add?id={{ i.id }}'">
+        <div class="hover" onclick="deletethis(this)" delete="{{ i.id }}">
+            <i class="fa-solid fa-trash"></i>
+            <p>Delete</p>
+        </div>
+        <div class="expense_text">
+            <h3 class="expense_head">{{ i.payload.0 }}</h3>
+            <h4 class="expense_note">{{ i.payload.1 }}</h4>
+        </div>
+        <h5 style="margin-right: 5px;">$</h5><h5 id="sub_amount">{{ i.payload.5 }}</h5>
+        
+    </div>
+{% endfor %}
+<button class="add_button_main" onclick="window.location = '/add'">add</button>
+<h3 class="total" id="total">{{ total }}</h3><h3 style="display: inline-flex; float: right;margin-right: 8px;">= $ </h3>
+<script>
+
+    function logout() {
+        Cookies.remove('token')
+        window.location = '/login'
+    }
+
+    var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+    function deletethis(s) {
+        var subscription = s.getAttribute("delete")
+        var form_data = new FormData();
+        form_data.append("subscription", subscription)
+        form_data.append("csrfmiddlewaretoken", csrfmiddlewaretoken)
+        $.ajax({
+                type: 'POST',
+                url: "delete",
+                processData: false,
+                cache: false,
+                contentType: false,
+                data: form_data,
+                    success: function(res) {
+                        window.location = '/'
+                    },error:function(err){
+                        window.location = '/login'
+                    }
+            })
+    }
+
+    function recur_change() {
+        if (document.getElementById("vise").value == "Yearly") {
+            const expenses = document.querySelectorAll("#sub_amount");
+            for (var i = 0; i < expenses.length; i++) {
+                expenses[i].innerHTML = expenses[i].innerHTML*12
+	        }
+            document.getElementById("total").innerHTML = document.getElementById("total").innerHTML*12
+
+        } else if(document.getElementById("vise").value == "Monthly") {
+            const expenses = document.querySelectorAll("#sub_amount");
+            for (var i = 0; i < expenses.length; i++) {
+                expenses[i].innerHTML = expenses[i].innerHTML/12
+	        }
+            document.getElementById("total").innerHTML = document.getElementById("total").innerHTML/12
+        }
+}
+</script>
+{% endblock %}

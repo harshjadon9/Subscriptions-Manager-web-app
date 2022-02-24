@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Login {% endblock %}
+
+{% block main %}
+<h2 style="text-align: center;margin-bottom: 30px;">Login</h1>
+<form id="form" method="post">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="Email" class="input_c signup_input" required>
+    <input type="password" name="pass" placeholder="Password" class="input_c signup_input" required>
+    <div class="error" id="error_box">error</div>
+    <p class="add_consent">I wont see your password, trust me 😈</p>
+    <button type="submit" class="add_button">Login</button>
+    <button type="button" onclick="window.location = '/signup'" class="add_button nobg">Sign Up, instead</button>
+</form>
+<script>
+    $("#form").submit(function (event) {
+        event.preventDefault()
+        var csrf = $("input[name=csrfmiddlewaretoken]").val();
+        var form_data = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "postsignIn",
+                processData: false,
+                cache: false,
+                contentType: false,
+                data: form_data,
+                    success: function(res) {
+                        Cookies.set('token', res['token'])
+                        // Cookies.set('auth_token', res['auth_token'])
+
+                        window.location = '/'
+                    },
+                    error:function(err){
+                        var err = (err.responseJSON['error'])
+                            if(err=="INVALID_PASSWORD"){
+                                document.getElementById('error_box').style.display = "block"
+                                document.getElementById('error_box').innerText = "u don't remember the password also??"
+                                setTimeout(()=>{document.getElementById('error_box').style.display = "none"}, 5000);
+                            }else if(err=="EMAIL_NOT_FOUND"){
+                                document.getElementById('error_box').style.display = "block"
+                                document.getElementById('error_box').innerText = "Bruh, create account first!"
+                                setTimeout(()=>{document.getElementById('error_box').style.display = "none"}, 5000);
+                            }else{
+                                document.getElementById('error_box').style.display = "block"
+                                document.getElementById('error_box').innerText = "server error, Contact harsh ASAP!"
+                                setTimeout(()=>{document.getElementById('error_box').style.display = "none"}, 5000);
+                            }
+                    }
+        });
+    })
+</script>
+{% endblock %}
