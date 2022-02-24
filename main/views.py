@@ -4,9 +4,9 @@ import pyrebase
 from django.shortcuts import redirect
 import json
 from django.http import JsonResponse
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import os
-load_dotenv()
+load_dotenv(find_dotenv())
 
 config={
         "apiKey": str(os.getenv('apiKey')),
