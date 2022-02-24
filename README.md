@@ -4,6 +4,13 @@
 # Subscriptions Manager 💸
 [link to the site (Shenory.com)](https://shenory.com/)
 
+
+```python
+#demo logins
+email: test@gmail.com
+passw: 123456
+```
+
 `no need to setup`
 
 ## Tech Stack 🚀
