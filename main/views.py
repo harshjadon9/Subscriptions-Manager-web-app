@@ -18,6 +18,7 @@ config={
         "appId": str(os.getenv('appId'))
 }
 
+
 # Initialising database,auth and firebase for further use
 firebase=pyrebase.initialize_app(config)
 authe = firebase.auth()
@@ -25,6 +26,7 @@ db=firebase.database()
 
 
 def index(request):
+    print(config)
     try:
         token = request.COOKIES['token']
         user=authe.get_account_info(token)
