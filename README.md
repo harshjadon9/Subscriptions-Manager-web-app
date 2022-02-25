@@ -5,7 +5,7 @@
 
 
 ```python
-#demo logins
+#demo logins or use personal
 email: test@gmail.com
 passw: 123456
 ```
