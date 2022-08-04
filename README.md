@@ -17,7 +17,7 @@ passw: 123456
   * Django
   * Authentication
     * Firebase Authentication ( Email only )
-  * Databse
+  * Database
     * Firebase Realtime Database
     
 * Front-End
@@ -31,7 +31,7 @@ passw: 123456
   * Server
     * VPS - Low-end
   * Domain ( bought long time ago )
-    * CloadFlare
+    * CloudFlare
   
 ##
 
