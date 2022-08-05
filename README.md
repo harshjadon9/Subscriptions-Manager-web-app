@@ -1,6 +1,10 @@
 # ACM Task
  
 # Subscriptions Manager 💸
+A Web app to manage your finances efficiently.
+
+_Website down_
+
 [link to the site (Shenory.com)](https://shenory.com/)
 
 
