@@ -1,6 +1,10 @@
 # ACM Task
  
 # Subscriptions Manager 💸
+A Web app to manage your finances efficiently.
+
+_Website down_
+
 [link to the site (Shenory.com)](https://shenory.com/)
 
 
@@ -17,7 +21,7 @@ passw: 123456
   * Django
   * Authentication
     * Firebase Authentication ( Email only )
-  * Databse
+  * Database
     * Firebase Realtime Database
     
 * Front-End
@@ -31,7 +35,7 @@ passw: 123456
   * Server
     * VPS - Low-end
   * Domain ( bought long time ago )
-    * CloadFlare
+    * CloudFlare
   
 ##
 
