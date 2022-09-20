@@ -28,6 +28,7 @@ textarea:focus,
 input:focus,
 select:focus {
   outline: none;
+  
 }
 button {
   background-color: #6d00ff;
